@@ -14,10 +14,17 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is required.']
     },
-    name: { 
+    name: {
       type: String,
       required: [true, 'Name is required.']
-    },    
+    },
+    address: [String],
+
+    order: {
+      type: Schema.Types.ObjectId,
+      ref: 'Order'
+    },
+    admin: Boolean
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    
@@ -25,6 +32,4 @@ const userSchema = new Schema(
   }
 );
 
-const User = model("User", userSchema);
-
-module.exports = User;
+module.exports = model("User", userSchema);
