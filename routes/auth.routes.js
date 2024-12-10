@@ -55,8 +55,8 @@ authorization.post('/login', async (req, res) => {
 			if (passIsEqual) {
 				// ---------------------
 				// grab info from user to create the Token
-				const { _id, name, email } = foundUser
-				const payload = { _id, name, email }
+				const { _id, name, email, admin } = foundUser
+				const payload = { _id, name, email, admin }
 				// ---------------------
 				// creating authorization - JSON web token
 				const authoToken = jwt.sign(payload, process.env.SECRET_WORD, {
