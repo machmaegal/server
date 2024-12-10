@@ -24,7 +24,7 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Order'
     },
-    admin: Boolean
+    admin: { Boolean, default: false }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`    
