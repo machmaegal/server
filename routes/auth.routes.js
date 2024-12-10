@@ -23,15 +23,15 @@ authorization.post('/signup', async (req, res) => {
 			// send the response with the new user
 			// to the frontEnd
 
-			res.status(201).send({
+			res.status(201).json({
 				message: 'New User Created',
 				data: newUser,
 			})
 		} else {
-			return res.status(409).send({ Message: 'Resource already exists!' })
+			return res.status(409).json({ Message: 'Resource already exists!' })
 		}
 	} catch (error) {
-		return res.status(404).send({ message: 'not found' })
+		return res.status(404).json({ message: 'not found' })
 	}
 })
 authorization.post('/login', async (req, res) => {
@@ -67,14 +67,14 @@ authorization.post('/login', async (req, res) => {
 					.status(200)
 					.send({ message: 'token attached', authoToken })
 			} else {
-				return res.status(401).send({ message: 'Wrong credentials' })
+				return res.status(401).json({ message: 'Wrong credentials' })
 			}
 		}
 	} catch (error) {}
 })
 
 authorization.get('/verify-user', isAuthenticated, (req, res) => {
-	res.status(200).json(req.payload)
+	res.status(200).json({ 'final point': req.payload })
 })
 
 module.exports = authorization
