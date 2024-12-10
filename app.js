@@ -19,7 +19,12 @@ const indexRoutes = require('./routes/index.routes')
 app.use('/users', indexRoutes)
 const authorization = require('./routes/auth.routes')
 app.use('/auth', authorization)
-
+const foodRoute = require('./routes/food.routes')
+app.use('/food', foodRoute)
+const drinkRoute = require('./routes/drink.routes')
+app.use('/drink', drinkRoute)
+const users = require('./routes/user.routes')
+app.use('/users', users)
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require('./error-handling')(app)
 

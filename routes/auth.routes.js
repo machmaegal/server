@@ -10,23 +10,51 @@ authorization.post('/signup', async (req, res) => {
 		// ||| ----------------------
 		// VVV  verify if user exists
 		const { email, password } = req.body
+		const domain = email.slice(email.indexOf('@'))
+
 		const foundUser = await User.findOne({ email })
 		if (!foundUser) {
 			// user not found, so lets create it
 			// lets salt the password ans encrypt
 			const salt = bcrypt.genSaltSync(12)
 			const hashedPassword = bcrypt.hashSync(password, salt)
-			// modifying the password to store the hashedone
-			const hashedUser = { ...req.body, password: hashedPassword }
-			// create a hashed user finally
-			const newUser = await User.create(hashedUser)
-			// send the response with the new user
-			// to the frontEnd
 
-			res.status(201).json({
-				message: 'New User Created',
-				data: newUser,
-			})
+			// -------------------
+			// checking domain @food.com then create admin account
+			if (domain === '@food.com') {
+				// modifying the password to store the hashedone
+
+				const hashedUser = {
+					...req.body,
+					password: hashedPassword,
+					admin: true,
+				}
+				// create a hashed user finally
+				const newUser = await User.create(hashedUser)
+				// send the response with the new user
+				// to the frontEnd
+
+				res.status(201).json({
+					message: 'New Admin Created',
+					data: newUser,
+				})
+			} else {
+				// modifying the password to store the hashedone
+
+				const hashedUser = {
+					...req.body,
+					password: hashedPassword,
+				}
+				// create a hashed user finally
+				const newUser = await User.create(hashedUser)
+				// send the response with the new user
+				// to the frontEnd
+
+				res.status(201).json({
+					message: 'New User Created',
+					data: newUser,
+				})
+			}
 		} else {
 			return res.status(409).json({ Message: 'Resource already exists!' })
 		}
@@ -65,7 +93,7 @@ authorization.post('/login', async (req, res) => {
 				})
 				return res
 					.status(200)
-					.send({ message: 'token attached', authoToken })
+					.send({ message: 'token attached', data: authoToken })
 			} else {
 				return res.status(401).json({ message: 'Wrong credentials' })
 			}
