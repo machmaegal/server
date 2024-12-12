@@ -40,7 +40,7 @@ users.get('/:userId', isAuthenticated, async (req, res) => {
 	}
 })
 
-users.put('/:userId/user-edit', isAuthenticated, async (req, res) => {
+users.put('/:userId', isAuthenticated, async (req, res) => {
 	try {
 		const userId = req.params.userId
 		const reqHeader = req.payload
@@ -56,7 +56,7 @@ users.put('/:userId/user-edit', isAuthenticated, async (req, res) => {
 		res.status(404).send('User not Found')
 	}
 })
-users.delete('/:userId/iuser-delete', isAuthenticated, async (req, res) => {
+users.delete('/:userId', isAuthenticated, async (req, res) => {
 	try {
 		const userId = req.params.userId
 		// const reqHeader = req.payload
