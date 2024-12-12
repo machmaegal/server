@@ -93,7 +93,11 @@ authorization.post('/login', async (req, res) => {
 				});
 				return res
 					.status(200)
-					.send({ message: 'token attached', data: authoToken, admin });
+					.send({
+						message: 'token attached',
+						data: authoToken,
+						admin,
+					});
 			} else {
 				return res.status(401).json({ message: 'Wrong credentials' });
 			}
