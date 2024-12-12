@@ -8,7 +8,7 @@ const Drink = require('../models/Drink.model');
 // create a drink route
 drinkRoute.post('/new-drink', isAdminAuthenticated, async (req, res) => {
 	try {
-		const newDrinkHeader = req.body;
+		const newDrinkHeader = req.body.data;
 		const drinkNameLower = newDrinkHeader.name.toLowerCase().trim();
 		const isNewDrink = await Drink.findOne({
 			name: drinkNameLower,
