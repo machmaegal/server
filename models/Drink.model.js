@@ -14,7 +14,7 @@ const drinkSchema = new Schema(
 					'halal',
 					'vegan',
 					'zero sugar',
-					'caffein',
+					'caffeine',
 				],
 			},
 		],
