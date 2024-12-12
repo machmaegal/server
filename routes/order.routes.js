@@ -50,9 +50,9 @@ orderRoute.put(
 )
 
 // -----------------------------
-// user get one order
+// ADMIN get one order
 orderRoute.get(
-	'/admin/:userId/user-order/:orderId',
+	'/admin/user-order/:orderId',
 	/* isisAuthenticated ,*/ async (req, res) => {
 		try {
 			// let userId = req.params.userId
