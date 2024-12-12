@@ -8,7 +8,7 @@ const foodSchema = new Schema(
 		label: [
 			{
 				type: String,
-				enum: ['vegan', 'vegetarian', 'halal', 'gluten-free', 'other'],
+				enum: ['vegan', 'vegetarian', 'halal', 'gluten-free', 'None'],
 			},
 		],
 	},
