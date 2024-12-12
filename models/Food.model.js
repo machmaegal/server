@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, model } = require('mongoose');
 
 const foodSchema = new Schema(
 	{
@@ -8,13 +8,13 @@ const foodSchema = new Schema(
 		label: [
 			{
 				type: String,
-				enum: ['vegan', 'vegetarian', 'halal', 'gluten-free', 'other'],
+				enum: ['vegan', 'vegetarian', 'halal', 'gluten-free', 'None'],
 			},
 		],
 	},
 	{
 		timestamps: true,
 	}
-)
+);
 
-module.exports = model('Food', foodSchema)
+module.exports = model('Food', foodSchema);
