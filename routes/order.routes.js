@@ -7,25 +7,9 @@ const Order = require('../models/order.model')
 
 // ADMIN ROUTES---------------------------
 // ADMIN get all orders from all customers
-orderRoute.get(
-	'/all-orders',
-	/*isAdminAuthenticated,*/ async (req, res) => {
-		try {
-			const orders = await Order.find()
-			console.log(orders)
 
-			if (orders.length === 0) {
-				return res.status(404).json({ message: 'No orders' })
-			}
-			return res.status(200).json({ data: orders })
-		} catch (error) {
-			res.status(404).json({ message: 'Order not Found!' })
-		}
-	}
-)
-// Admin get all orders
 orderRoute.get(
-	'/admin/:adminId/all-orders',
+	'/admin/all-orders',
 	/* isisAuthenticated ,*/ async (req, res) => {
 		try {
 			let adminId = req.params.userId
@@ -41,6 +25,31 @@ orderRoute.get(
 		}
 	}
 )
+// ADMIN update one order
+orderRoute.put(
+	'/admin/user-order/:orderId',
+	/* isisAuthenticated ,*/ async (req, res) => {
+		try {
+			// let userId = req.params.userId
+			let orderId = req.params.orderId
+			const updatedOrder = await Order.findByIdAndUpdate(
+				orderId,
+				req.body,
+				{ new: true }
+			)
+
+			if (updatedOrder) {
+				return res.status(200).json({ data: updatedOrder })
+			} else {
+				res.status(404).json({ message: 'No orders yet!' })
+			}
+		} catch (error) {
+			res.status(404).json({ message: 'Order not Found!' })
+		}
+	}
+)
+
+// -----------------------------
 // user get one order
 orderRoute.get(
 	'/admin/:userId/user-order/:orderId',
@@ -52,6 +61,26 @@ orderRoute.get(
 
 			if (customerOrder) {
 				return res.status(200).json({ data: customerOrder })
+			} else {
+				res.status(404).json({ message: 'No orders yet!' })
+			}
+		} catch (error) {
+			res.status(404).json({ message: 'Order not Found!' })
+		}
+	}
+)
+
+// ADMIN delete one order
+orderRoute.delete(
+	'/admin/user-order/:orderId',
+	/* isisAuthenticated ,*/ async (req, res) => {
+		try {
+			// let userId = req.params.userId
+			let orderId = req.params.orderId
+			const customerOrder = await Order.findByIdAndDelete(orderId)
+
+			if (customerOrder) {
+				return res.status(200).json({ message: 'Order Deleted!' })
 			} else {
 				res.status(404).json({ message: 'No orders yet!' })
 			}
