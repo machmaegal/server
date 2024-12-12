@@ -8,27 +8,25 @@ const Order = require('../models/order.model')
 // ADMIN ROUTES---------------------------
 // ADMIN get all orders from all customers
 
-orderRoute.get(
-	'/admin/all-orders',
-	/* isisAuthenticated ,*/ async (req, res) => {
-		try {
-			let adminId = req.params.userId
-			const customerOrders = await Order.find()
+orderRoute.get('/admin/all-orders', isAdminAuthenticated, async (req, res) => {
+	try {
+		let adminId = req.params.userId
+		const customerOrders = await Order.find()
 
-			if (customerOrders.length !== 0) {
-				return res.status(200).json({ data: customerOrders })
-			} else {
-				res.status(404).json({ message: 'No orders yet!' })
-			}
-		} catch (error) {
-			res.status(404).json({ message: 'Order not Found!' })
+		if (customerOrders.length !== 0) {
+			return res.status(200).json({ data: customerOrders })
+		} else {
+			res.status(404).json({ message: 'No orders yet!' })
 		}
+	} catch (error) {
+		res.status(404).json({ message: 'Order not Found!' })
 	}
-)
+})
 // ADMIN update one order
 orderRoute.put(
 	'/admin/user-order/:orderId',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAdminAuthenticated,
+	async (req, res) => {
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
@@ -53,7 +51,8 @@ orderRoute.put(
 // ADMIN get one order
 orderRoute.get(
 	'/admin/user-order/:orderId',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAdminAuthenticated,
+	async (req, res) => {
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
@@ -73,7 +72,8 @@ orderRoute.get(
 // ADMIN delete one order
 orderRoute.delete(
 	'/admin/user-order/:orderId',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAdminAuthenticated,
+	async (req, res) => {
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
@@ -94,7 +94,8 @@ orderRoute.delete(
 // user get his orders
 orderRoute.get(
 	'/user/:userId/user-orders',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAuthenticated,
+	async (req, res) => {
 		try {
 			let userId = req.params.userId
 			const customerOrders = await Order.find({ customer: userId })
@@ -112,7 +113,8 @@ orderRoute.get(
 // user get one order
 orderRoute.get(
 	'/user/:userId/user-order/:orderId',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAuthenticated,
+	async (req, res) => {
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
@@ -131,7 +133,8 @@ orderRoute.get(
 // user delete one order
 orderRoute.delete(
 	'/user/:userId/user-order/:orderId',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAuthenticated,
+	async (req, res) => {
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
@@ -150,7 +153,8 @@ orderRoute.delete(
 // user update one order
 orderRoute.put(
 	'/user/:userId/user-order/:orderId',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAuthenticated,
+	async (req, res) => {
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
@@ -174,7 +178,8 @@ orderRoute.put(
 // user make order
 orderRoute.post(
 	'/user/:userId/make-order',
-	/* isisAuthenticated ,*/ async (req, res) => {
+	isAuthenticated,
+	async (req, res) => {
 		try {
 			let userId = req.params.userId
 			let orderCreated = await Order.create(req.body)
