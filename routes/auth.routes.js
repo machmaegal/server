@@ -89,7 +89,7 @@ authorization.post('/login', async (req, res) => {
 				// creating authorization - JSON web token
 				const authoToken = jwt.sign(payload, process.env.SECRET_WORD, {
 					algorithm: 'HS256',
-					expiresIn: '2h',
+					expiresIn: '24h',
 				});
 				return res
 					.status(200)
