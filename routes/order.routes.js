@@ -11,7 +11,10 @@ const Order = require('../models/order.model')
 orderRoute.get('/admin/all-orders', isAdminAuthenticated, async (req, res) => {
 	try {
 		let adminId = req.params.userId
-		const customerOrders = await Order.find()
+		const customerOrders = await Order.find({})
+			.populate('food')
+			.populate('drink')
+			.populate('customer')
 
 		if (customerOrders.length !== 0) {
 			return res.status(200).json({ data: customerOrders })
@@ -98,7 +101,11 @@ orderRoute.get(
 	async (req, res) => {
 		try {
 			let userId = req.params.userId
+
 			const customerOrders = await Order.find({ customer: userId })
+				.populate('food')
+				.populate('drink')
+				.populate('customer')
 
 			if (customerOrders.length !== 0) {
 				return res.status(200).json({ data: customerOrders })
@@ -182,7 +189,9 @@ orderRoute.post(
 	async (req, res) => {
 		try {
 			let userId = req.params.userId
-			let orderCreated = await Order.create(req.body)
+			console.log('req>>>>>>>>>>>>>>>>>')
+
+			let orderCreated = await Order.create(req.body.data)
 			res.status(200).json({ data: orderCreated })
 		} catch (error) {
 			res.status(404).json({ message: 'Impossible to put a order' })
