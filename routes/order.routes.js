@@ -165,9 +165,11 @@ orderRoute.put(
 		try {
 			// let userId = req.params.userId
 			let orderId = req.params.orderId
+			console.log(orderId, '>>>>>>', req.body.data)
+
 			const updatedOrder = await Order.findByIdAndUpdate(
 				orderId,
-				req.body,
+				req.body.data,
 				{ new: true }
 			)
 
