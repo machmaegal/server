@@ -1,75 +1,75 @@
-const users = require('express').Router();
-const User = require('../models/User.model');
+const users = require('express').Router()
+const User = require('../models/User.model')
 const {
 	isAuthenticated,
 	isAdminAuthenticated,
-} = require('../middleware/jwt.middleware');
+} = require('../middleware/jwt.middleware')
 // ------------------
 // ADMIN gets all users
 users.get('/', isAdminAuthenticated, async (req, res) => {
 	try {
-		const findUsers = await User.find();
-		console.log(findUsers.length);
+		const findUsers = await User.find()
+		console.log(findUsers.length)
 
 		if (findUsers.length > 0) {
-			res.status(200).json({ data: findUsers });
+			res.status(200).json({ data: findUsers })
 		} else {
-			res.status(404).send('No users');
+			res.status(404).send('No users')
 		}
 	} catch (error) {
-		res.status(404).send('User not Found');
+		res.status(404).send('User not Found')
 	}
-});
+})
 
 // everybody do every thing
 users.get('/:userId', isAuthenticated, async (req, res) => {
 	try {
-		const userId = req.params.userId;
-		const reqHeader = req.payload;
-		const currentUser = reqHeader['All Users'];
+		const userId = req.params.userId
+		const reqHeader = req.payload
+		const currentUser = reqHeader['All Users']
 		//const userNoPass = { ...currentUser, password: 'Not today' };
-		const findUser = await User.findById(userId).lean();
+		const findUser = await User.findById(userId).lean()
 
 		if (findUser) {
-			res.status(200).json({ data: currentUser });
+			res.status(200).json({ data: currentUser })
 		} else {
-			res.status(404).send('User not Found');
+			res.status(404).send('User not Found')
 		}
 	} catch (error) {
-		res.status(404).send('User not Found');
+		res.status(404).send('User not Found')
 	}
-});
+})
 
 users.put('/:userId', isAuthenticated, async (req, res) => {
 	try {
-		const userId = req.params.userId;
+		const userId = req.params.userId
 		//const reqHeader = req.payload;
-		const updatedUser = req.body;
+		const updatedUser = req.body.data
 		const findUser = await User.findByIdAndUpdate(userId, updatedUser, {
 			new: true,
-		}).lean();
+		}).lean()
 		//const userNoPass = { ...findUser, password: 'Not today' };
 		// console.log(findUser)
 
-		res.status(200).json({ data: findUser });
+		res.status(200).json({ data: findUser })
 	} catch (error) {
-		res.status(404).send('User not Found');
+		res.status(404).send('User not Found')
 	}
-});
+})
 
 users.delete('/:userId', isAuthenticated, async (req, res) => {
 	try {
-		await User.findByIdAndDelete(req.params.userId);
+		await User.findByIdAndDelete(req.params.userId)
 		// const reqHeader = req.payload
 		// const currentUserId = reqHeader['All Users']._id
 		// const currentUser = reqHeader['All Users']
 
 		//const findUser = await User.findByIdAndDelete(userId);
 
-		res.status(200).json({ message: 'User deleted!' });
+		res.status(200).json({ message: 'User deleted!' })
 	} catch (error) {
-		res.status(404).send('User not Found');
+		res.status(404).send('User not Found')
 	}
-});
+})
 
-module.exports = users;
+module.exports = users
