@@ -193,7 +193,7 @@ orderRoute.post(
 			let userId = req.params.userId
 			console.log('req>>>>>>>>>>>>>>>>>', req.body)
 
-			let orderCreated = await Order.create(req.body)
+			let orderCreated = await Order.create(req.body.data)
 			res.status(200).json({ data: orderCreated })
 		} catch (error) {
 			res.status(404).json({ message: 'Impossible to put a order' })
